@@ -1,65 +1,166 @@
+"use client";
+
+import React from "react";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <main className="min-h-screen bg-black">
+      <Hero />
+      <DecoratedSection>
+        <Services />
+        <Book />
+      </DecoratedSection>
+    </main>
+  );
+}
+
+/**
+ * Wrapper for Services + Book
+ * Adds barber pole stickers (left + right) as background decor
+ */
+function DecoratedSection({ children }: { children: React.ReactNode }) {
+  return (
+    <section className="relative bg-[#F6F3EE] overflow-hidden">
+      {/* LEFT barber pole */}
+      <div className="pointer-events-none absolute left-[-90px] top-40 opacity-0.04">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+          src="/images/barber-pole.png"
+          alt="Barber Pole"
+          width={140}
+          height={420}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+      </div>
+
+      {/* RIGHT barber pole */}
+      <div className="pointer-events-none absolute right-[-90px] top-40 opacity-0.04">
+        <Image
+          src="/images/barber-pole.png"
+          alt="Barber Pole"
+          width={140}
+          height={420}
+        />
+      </div>
+
+      {/* Foreground content */}
+      <div className="relative z-10">{children}</div>
+    </section>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="relative h-screen w-full overflow-hidden bg-black">
+      <video
+        className="absolute inset-0 h-full w-full object-cover opacity-60"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      >
+        <source src="/videos/scissors.mp4" type="video/mp4" />
+      </video>
+
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+        <p className="text-white/60 uppercase tracking-[0.4em] text-xs font-medium">
+          SALON • STUDIO • RITUAL
+        </p>
+
+        <h1 className="mt-6 text-white text-5xl md:text-7xl font-light tracking-tight">
+          Precision <span className="italic">Crafted</span>
+        </h1>
+
+        <a
+          href="#book"
+          className="mt-10 inline-block rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-8 py-4 text-sm font-medium text-white hover:bg-white hover:text-black transition-all duration-300"
+        >
+          Reserve Your Chair
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function Services() {
+  return (
+    <section id="services" className="py-24 text-black">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="max-w-2xl">
+          <p className="uppercase tracking-[0.35em] text-xs font-bold text-black/60">
+            The Menu
           </p>
+
+          <h2 className="mt-4 text-4xl md:text-5xl font-light tracking-tight">
+            Clean cuts. Rich color. <br />
+            Ritual-level care.
+          </h2>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
+          <ServiceCard
+            title="Cut & Style"
+            desc="Signature precision cut, scalp massage, and bespoke styling."
+            price="PKR 2,500+"
+          />
+          <ServiceCard
+            title="Color & Tone"
+            desc="Advanced color correction, gloss treatments, and custom toning."
+            price="PKR 6,000+"
+          />
+          <ServiceCard
+            title="Treatment"
+            desc="Deep tissue repair, hydration therapy, and scalp rejuvenation."
+            price="PKR 3,500+"
+          />
         </div>
-      </main>
+      </div>
+    </section>
+  );
+}
+
+function ServiceCard({
+  title,
+  desc,
+  price,
+}: {
+  title: string;
+  desc: string;
+  price: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-black/10 bg-white/70 p-8 backdrop-blur transition hover:bg-white hover:shadow-xl">
+      <div className="flex items-start justify-between gap-4">
+        <h3 className="text-xl font-light">{title}</h3>
+        <span className="text-sm text-black/40">{price}</span>
+      </div>
+      <p className="mt-4 text-sm text-black/60">{desc}</p>
     </div>
+  );
+}
+
+function Book() {
+  return (
+    <section id="book" className="pb-24 text-black">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="rounded-[2.5rem] border border-black/10 bg-white/80 p-8 md:p-16 shadow-xl">
+          <p className="uppercase tracking-[0.35em] text-xs font-bold text-black/60">
+            Booking
+          </p>
+
+          <h2 className="mt-4 text-3xl md:text-4xl font-light tracking-tight">
+            Reserve your slot.
+          </h2>
+
+          <form className="mt-12 grid gap-4 md:grid-cols-2">
+            <input className="rounded-xl border border-black/10 px-5 py-4 text-sm" placeholder="Full name" />
+            <input className="rounded-xl border border-black/10 px-5 py-4 text-sm" placeholder="Phone / WhatsApp" />
+            <button className="md:col-span-2 rounded-xl bg-black px-6 py-4 text-sm text-white">
+              Request Appointment
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
   );
 }
